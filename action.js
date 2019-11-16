@@ -8,9 +8,22 @@ let shrink = document.getElementById('shrink');
 let convert = document.getElementById('convert');
 
 shrink.onclick = function(element) {
-    // TODO
+    // TODO auxiliary function which outputs the shortened tweet
+
+    let shortTweet = "lol"; // TODO replace lol by the shortened tweet
+    copyToClipboard(shortTweet);
+    window.alert("Now, break the limit by directly pasting into the text box!")
 };
 
 convert.onclick = function(element) {
-    // TODO
+    // TODO auxiliary function which converts shortened tweet back to original
+};
+
+const copyToClipboard = str => {
+    const el = document.createElement('textarea');
+    el.value = str;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
 };
