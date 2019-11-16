@@ -73,6 +73,7 @@ export function encode(source){
 }
 
 export function decode(source){
+<<<<<<< Updated upstream
     let maxCharCode = targetCharCodeBegin + sourceCharIndices.size * sourceCharIndices.size - 1;
     let result = "";
     for(let i = 0;i<source.length;++i){
@@ -94,4 +95,10 @@ export function decode(source){
         success:true,
         text:result
     };
+=======
+    return {
+        success: true,
+        text: "I am replaced"
+    }
+>>>>>>> Stashed changes
 }
