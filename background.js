@@ -14,3 +14,11 @@ chrome.runtime.onInstalled.addListener(function() {
     }]);
   });
 });
+
+/*
+setInterval(
+  ()=>{
+    alert('ticking');
+  },1600
+)
+*/

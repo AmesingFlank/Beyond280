@@ -9,11 +9,14 @@ let shrink = document.getElementById('shrink');
 let convert = document.getElementById('convert');
 
 shrink.onclick = function(element) {
-    // TODO auxiliary function which outputs the shortened tweet
-
-    let shortTweet = "lol"; // TODO replace lol by the shortened tweet
-    copyToClipboard(shortTweet);
-    window.alert("Now, break the limit by directly pasting into the text box!")
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.executeScript(
+            tabs[0].id,
+            {file: 'EncodeDecode.js'});
+        chrome.tabs.executeScript(
+            tabs[0].id,
+            {file: 'ShrinkOnClick.js'});
+    });
 };
 
 convert.onclick = function(element) {
@@ -25,11 +28,3 @@ convert.onclick = function(element) {
     });
 };
 
-const copyToClipboard = str => {
-    const el = document.createElement('textarea');
-    el.value = str;
-    document.body.appendChild(el);
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-};

@@ -1,4 +1,8 @@
-export class TransformResult{
+{
+
+
+
+class TransformResult{
     success;
     text;
 }
@@ -34,7 +38,7 @@ function buildTable(){
 buildTable();
 
 
-export function encode(source){
+function encode(source){
     if (source.length %2 == 1){
         source = source + " ";
     }
@@ -72,8 +76,7 @@ export function encode(source){
     
 }
 
-export function decode(source){
-<<<<<<< Updated upstream
+function decode(source){
     let maxCharCode = targetCharCodeBegin + sourceCharIndices.size * sourceCharIndices.size - 1;
     let result = "";
     for(let i = 0;i<source.length;++i){
@@ -95,10 +98,21 @@ export function decode(source){
         success:true,
         text:result
     };
-=======
-    return {
-        success: true,
-        text: "I am replaced"
-    }
->>>>>>> Stashed changes
+}
+
+if(window){
+    console.log("haswindow")
+    console.log(window)
+    window.encode = encode;
+    window.decode = decode;
+}
+if(document){
+    console.log("has doc")
+    console.log(document)
+    document.encode = encode;
+    document.decode = decode;
+}
+
+
+
 }
