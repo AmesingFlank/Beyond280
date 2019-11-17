@@ -1,5 +1,9 @@
 {
-
+ /**
+  * Encoding N*3 English lower case + digits characers into N unicode characters,
+  * Target characters are from plane0 and plane2
+  * 
+  */
 
 
 class TransformResult{
