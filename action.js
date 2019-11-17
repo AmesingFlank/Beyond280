@@ -1,4 +1,3 @@
-
 let shrink = document.getElementById('shrink');
 let convert = document.getElementById('convert');
 
