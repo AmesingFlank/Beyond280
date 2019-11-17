@@ -7,26 +7,27 @@ class TransformResult{
     text;
 }
 
-const targetCharCodeBegin = 30000;
+const targetCodePointBegin = 1000;
+const plane0Limit = 40000;
+const plane2Limit = 40000;
+const plane2Begin = 65536*2;
 
 let sourceCharIndices = new Map();  // char -> Int
 let indicesToSourceChar = new Map();
 
+let charsInGroup = 3;
+
 function buildTable(){
     let sourceIndex = 0;
-    for(let char = 'A'.charCodeAt(0) ; char <= 'Z'.charCodeAt(0); ++char){
-        sourceCharIndices.set(String.fromCharCode(char),sourceIndex);
+    for(let char = 'a'.codePointAt(0) ; char <= 'z'.codePointAt(0); ++char){
+        sourceCharIndices.set(String.fromCodePoint(char),sourceIndex);
         ++sourceIndex;
     }
-    for(let char = 'a'.charCodeAt(0) ; char <= 'z'.charCodeAt(0); ++char){
-        sourceCharIndices.set(String.fromCharCode(char),sourceIndex);
+    for(let char = '0'.codePointAt(0) ; char <= '9'.codePointAt(0); ++char){
+        sourceCharIndices.set(String.fromCodePoint(char),sourceIndex);
         ++sourceIndex;
     }
-    for(let char = '0'.charCodeAt(0) ; char <= '9'.charCodeAt(0); ++char){
-        sourceCharIndices.set(String.fromCharCode(char),sourceIndex);
-        ++sourceIndex;
-    }
-    for(let char of [',','.',' ','?','!']){
+    for(let char of ['.',',',' ','#','!','?','/']){
         sourceCharIndices.set(char,sourceIndex);
         ++sourceIndex;
     } 
@@ -38,34 +39,57 @@ function buildTable(){
 buildTable();
 
 
+
+function codeToTarget(code){
+    if (code<=plane0Limit){
+        return String.fromCodePoint(code)
+    }
+    else{
+        let leftover = code - plane0Limit
+        let newCode = plane2Begin + leftover
+        console.log(newCode)
+        return String.fromCodePoint(newCode);
+    }
+}
+
+
+function targetToCode(target){
+    let code = target.codePointAt(0);
+    if(code <= plane0Limit){
+        return code;
+    }
+    else{
+        leftover = code - plane2Begin;
+        let newCode = leftover + plane0Limit;
+        return newCode;
+    }
+}
+
+
 function encode(source){
-    if (source.length %2 == 1){
+    while (source.length % charsInGroup != 0){
         source = source + " ";
     }
-    if (source.length > 280 * 2){
+    if (source.length > 140 * charsInGroup){
         return {
             success : false
         }
     }
     let result = "";
-    for(let i = 0;i<source.length;i+=2){
-        let char0 = source[i];
-        let char1 = source[i+1];
-        if(!sourceCharIndices.has(char0)){
-            return {
-                success : false
+    for(let i = 0;i<source.length;i+=charsInGroup){
+        let targetCodePoint = targetCodePointBegin
+        for(let j = 0;j<charsInGroup;++j){
+            let char = source[i+j];
+            if(!sourceCharIndices.has(char)){
+                return {
+                    success : false
+                }
             }
+            let index = sourceCharIndices.get(char);
+            targetCodePoint += sourceCharIndices.size**j*index
         }
-        if(!sourceCharIndices.has(char1)){
-            return {
-                success : false
-            }
-        }
-        let index0 = sourceCharIndices.get(char0);
-        let index1 = sourceCharIndices.get(char1);
-        let pairIndex = index0 * sourceCharIndices.size + index1;
-        let targetCharCode = pairIndex + targetCharCodeBegin;
-        let targetChar = String.fromCharCode(targetCharCode);
+        //console.log(targetCodePoint)
+        let targetChar = codeToTarget(targetCodePoint);
         result += targetChar;
     }
 
@@ -77,22 +101,27 @@ function encode(source){
 }
 
 function decode(source){
-    let maxCharCode = targetCharCodeBegin + sourceCharIndices.size * sourceCharIndices.size - 1;
+    
     let result = "";
-    for(let i = 0;i<source.length;++i){
-        let char = source[i];
-        let code = char.charCodeAt(0);
-        if (code < targetCharCodeBegin || code > maxCharCode){
+    for(let i = 0;i<[...source].length;++i){
+        let char = [...source][i];
+        let code = targetToCode(char);
+        
+        code = code - targetCodePointBegin;
+
+        if (code < 0 || code >= sourceCharIndices**charsInGroup ){
             return {
                 success:false,
             }
         }
-        code = code - targetCharCodeBegin;
-        let index1 = code % sourceCharIndices.size;
-        let index0 = (code- index1) / sourceCharIndices.size
-        let char1 = indicesToSourceChar.get(index1);
-        let char0 = indicesToSourceChar.get(index0);
-        result = result + char0 + char1;
+
+        for(let j = 0;j<charsInGroup;++j){
+            let index = code % sourceCharIndices.size;
+            code = (code - index) / sourceCharIndices.size;
+            let char = indicesToSourceChar.get(index)
+            result = result + char
+        }
+        
     }
     return {
         success:true,

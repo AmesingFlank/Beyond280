@@ -1,6 +1,5 @@
 {
-console.log(1113);
-
+    
 const copyToClipboard = str => {
     const el = document.createElement('textarea');
     el.value = str;
@@ -11,9 +10,16 @@ const copyToClipboard = str => {
 };
 
 let outerDiv = document.querySelector('.public-DraftStyleDefault-block');
-let outerSpan = outerDiv.children[0].children[0];
 
-let sourceText = outerSpan.textContent;
+let textSpan = outerDiv.children[0].children[0];
+
+let sourceText = textSpan.textContent;
+
+
+if(outerDiv.children.length>1){
+    let extraSpan = outerDiv.children[1].children[0];
+    sourceText += extraSpan.textContent;
+}
 
 let encodeResult = encode(sourceText);
 
