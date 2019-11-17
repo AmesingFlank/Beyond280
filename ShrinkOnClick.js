@@ -9,31 +9,27 @@ const copyToClipboard = str => {
     document.body.removeChild(el);
 };
 
-let outerDiv = document.querySelector('.public-DraftStyleDefault-block');
+let outerDivs = document.querySelectorAll('.public-DraftStyleDefault-block');
+let encodeText = "";
 
-let textSpan = outerDiv.children[0].children[0];
-
-let sourceText = textSpan.textContent;
-
-
-if(outerDiv.children.length>1){
-    let extraSpan = outerDiv.children[1].children[0];
-    sourceText += extraSpan.textContent;
+for (let outerDiv of outerDivs) {
+    let textSpan = outerDiv.children[0].children[0];
+    let sourceText = textSpan.textContent;
+    if(outerDiv.children.length>1){
+        let extraSpan = outerDiv.children[1].children[0];
+        sourceText += extraSpan.textContent;
+    }
+    let encodeResult = encode(sourceText);
+    console.log(encodeResult);
+    if (encodeResult.success) {
+        encodeText += encodeResult.text;
+    } else {
+        window.alert("compression failed")
+    }
 }
 
-let encodeResult = encode(sourceText);
-
-console.log(encodeResult);
-
-if(encodeResult.success){
-    let encodeText = encodeResult.text
-    copyToClipboard(encodeText)
-    window.alert("Your tweet had been compressed, and the results are in your clipboard!")
-}
-
-else{
-    window.alert("compression failed")
-}
+copyToClipboard(encodeText);
+window.alert("Your tweet has been compressed, and the results are in your clipboard!")
 
 }
 

@@ -97,7 +97,7 @@ function encode(source){
     }
     let result = "";
     for(let i = 0;i<source.length;i+=charsInGroup){
-        let targetCodePoint = targetCodePointBegin
+        let targetCodePoint = targetCodePointBegin;
         for(let j = 0;j<charsInGroup;++j){
             let char = source[i+j];
             if(!sourceCharIndices.has(char)){
@@ -138,7 +138,7 @@ function decode(source){
         for(let j = 0;j<charsInGroup;++j){
             let index = code % sourceCharIndices.size;
             code = (code - index) / sourceCharIndices.size;
-            let char = indicesToSourceChar.get(index)
+            let char = indicesToSourceChar.get(index);
             result = result + char
         }
         
@@ -150,14 +150,14 @@ function decode(source){
 }
 
 if(window){
-    console.log("haswindow")
-    console.log(window)
+    console.log("haswindow");
+    console.log(window);
     window.encode = encode;
     window.decode = decode;
 }
 if(document){
-    console.log("has doc")
-    console.log(document)
+    console.log("has doc");
+    console.log(document);
     document.encode = encode;
     document.decode = decode;
 }
