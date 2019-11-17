@@ -29,6 +29,8 @@ function buildTable(){
         sourceCharIndices.set(String.fromCodePoint(char),sourceIndex);
         ++sourceIndex;
     }
+    sourceCharIndices.set("\n",sourceIndex);
+    ++sourceIndex;
     /*
     for(let char = 'a'.codePointAt(0) ; char <= 'z'.codePointAt(0); ++char){
         sourceCharIndices.set(String.fromCodePoint(char),sourceIndex);
