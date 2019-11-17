@@ -1,7 +1,6 @@
 {
  /**
   * Encoding N*3 English lower case + digits characers into N unicode characters,
-  * Target characters are from plane0 and plane2
   * 
   */
 
@@ -12,9 +11,12 @@ class TransformResult{
 }
 
 const targetCodePointBegin = 1000;
+
+/*
 const plane0Limit = 40000;
 const plane2Limit = 40000;
 const plane2Begin = 65536*2;
+*/
 
 let sourceCharIndices = new Map();  // char -> Int
 let indicesToSourceChar = new Map();
@@ -23,6 +25,11 @@ let charsInGroup = 3;
 
 function buildTable(){
     let sourceIndex = 0;
+    for(let char = 32 ; char <= 126; ++char){
+        sourceCharIndices.set(String.fromCodePoint(char),sourceIndex);
+        ++sourceIndex;
+    }
+    /*
     for(let char = 'a'.codePointAt(0) ; char <= 'z'.codePointAt(0); ++char){
         sourceCharIndices.set(String.fromCodePoint(char),sourceIndex);
         ++sourceIndex;
@@ -35,6 +42,7 @@ function buildTable(){
         sourceCharIndices.set(char,sourceIndex);
         ++sourceIndex;
     } 
+    */
     sourceCharIndices.forEach((v,k,m)=>{
         indicesToSourceChar.set(v,k);
     }) ;  
@@ -45,6 +53,9 @@ buildTable();
 
 
 function codeToTarget(code){
+    return String.fromCodePoint(code);
+
+    /*
     if (code<=plane0Limit){
         return String.fromCodePoint(code)
     }
@@ -54,11 +65,14 @@ function codeToTarget(code){
         console.log(newCode)
         return String.fromCodePoint(newCode);
     }
+    */
 }
 
 
 function targetToCode(target){
     let code = target.codePointAt(0);
+    return code;
+    /*
     if(code <= plane0Limit){
         return code;
     }
@@ -66,7 +80,7 @@ function targetToCode(target){
         leftover = code - plane2Begin;
         let newCode = leftover + plane0Limit;
         return newCode;
-    }
+    }*/
 }
 
 
