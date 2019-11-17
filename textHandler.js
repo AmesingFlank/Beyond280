@@ -1,10 +1,10 @@
 {
-const doDecode = ()=> {
+const doDecode = () => {
     function tryDecodeAllTexts() {
         let tweets = document.getElementsByClassName("css-1dbjc4n r-1loqt21 r-1udh08x r-o7ynqc r-1j63xyz");
         //console.log(tweets);
         for (let i = tweets.length - 1; i >= 0; i--) {
-            let textbox = tweets[i].querySelector(".css-901oao.r-gwet1z.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-bnwqim.r-qvutc0");
+            let textbox = tweets[i].querySelector(".css-901oao.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-bnwqim.r-qvutc0");
 
             if (textbox) {
                 //console.log(textbox)
