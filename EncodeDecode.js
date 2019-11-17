@@ -4,7 +4,6 @@
   * 
   */
 
-
 class TransformResult{
     success;
     text;
@@ -20,7 +19,6 @@ const plane2Begin = 65536*2;
 
 let sourceCharIndices = new Map();  // char -> Int
 let indicesToSourceChar = new Map();
-
 let charsInGroup = 3;
 
 function buildTable(){
@@ -52,8 +50,6 @@ function buildTable(){
 
 buildTable();
 
-
-
 function codeToTarget(code){
     return String.fromCodePoint(code);
 
@@ -70,7 +66,6 @@ function codeToTarget(code){
     */
 }
 
-
 function targetToCode(target){
     let code = target.codePointAt(0);
     return code;
@@ -84,7 +79,6 @@ function targetToCode(target){
         return newCode;
     }*/
 }
-
 
 function encode(source){
     while (source.length % charsInGroup != 0){
@@ -112,16 +106,13 @@ function encode(source){
         let targetChar = codeToTarget(targetCodePoint);
         result += targetChar;
     }
-
     return {
         success:true,
         text:result
     };
-    
 }
 
 function decode(source){
-    
     let result = "";
     for(let i = 0;i<[...source].length;++i){
         let char = [...source][i];
@@ -134,14 +125,12 @@ function decode(source){
                 success:false,
             }
         }
-
         for(let j = 0;j<charsInGroup;++j){
             let index = code % sourceCharIndices.size;
             code = (code - index) / sourceCharIndices.size;
             let char = indicesToSourceChar.get(index);
             result = result + char
         }
-        
     }
     return {
         success:true,
@@ -155,13 +144,11 @@ if(window){
     window.encode = encode;
     window.decode = decode;
 }
+
 if(document){
     console.log("has doc");
     console.log(document);
     document.encode = encode;
     document.decode = decode;
 }
-
-
-
 }

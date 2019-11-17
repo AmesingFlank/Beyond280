@@ -2,12 +2,10 @@
 const doDecode = () => {
     function tryDecodeAllTexts() {
         let tweets = document.getElementsByClassName("css-901oao css-16my406 r-1qd0xha r-ad9z0x r-bcqeeo r-qvutc0");
-        let strings = [];
         for (let i = tweets.length - 1; i >= 0; i--) {
-            let textbox = tweets[i]
+            let textbox = tweets[i];
             decodeAndReplace(textbox)
         }
-        
     }
 
     tryDecodeAllTexts();
@@ -24,7 +22,7 @@ const doDecode = () => {
     function decodeAndReplace(element) {
         let decodeResult;
         try {
-            decodeResult = decode(element.textContent)
+            decodeResult = decode(element.textContent);
             if (decodeResult["success"]) {
                 element.textContent = decodeResult["text"]
             }

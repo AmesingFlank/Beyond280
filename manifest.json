@@ -1,7 +1,7 @@
 {
   "name": "Beyond 280",
   "version": "1.0",
-  "description": "Go boldly beyond the limit set by Twitter!",
+  "description": "To boldly go beyond the limit set by Twitter!",
   "permissions": ["activeTab", "declarativeContent", "storage"],
   "background": {
     "scripts": ["background.js"],
