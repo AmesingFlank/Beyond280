@@ -1,37 +1,34 @@
 {
-const doDecode = ()=>{
+const doDecode = () => {
     function tryDecodeAllTexts() {
         let tweets = document.getElementsByClassName("css-1dbjc4n r-1loqt21 r-1udh08x r-o7ynqc r-1j63xyz");
         //console.log(tweets);
-        let strings = [];
         for (let i = tweets.length - 1; i >= 0; i--) {
-            let textbox = tweets[i].querySelector(".css-901oao.r-hkyrab.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-bnwqim.r-qvutc0");
+            let textbox = tweets[i].querySelector(".css-901oao.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-bnwqim.r-qvutc0");
 
-            if(textbox){
+            if (textbox) {
                 //console.log(textbox)
                 let text = textbox.querySelector(".css-901oao.css-16my406.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0");
                 //console.log(text)
                 decodeAndReplace(text)
             }
-            
         }
-
     }
 
-    tryDecodeAllTexts()
+    tryDecodeAllTexts();
 
     function decodeAndReplace(element) {
         let decodeResult;
         try {
-            decodeResult = decode(element.textContent)
+            decodeResult = decode(element.textContent);
             if (decodeResult["success"]) {
                 element.textContent = decodeResult["text"]
             }
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err)
         }
     }
+
     //css-901oao css-16my406 r-1qd0xha r-ad9z0x r-bcqeeo r-qvutc0
     //css-901oao css-16my406 r-1qd0xha r-ad9z0x r-bcqeeo r-qvutc0
     //article: css-1dbjc4n r-1loqt21 r-1udh08x r-o7ynqc r-1j63xyz
@@ -42,7 +39,8 @@ const doDecode = ()=>{
     //tweet text : css-901oao css-16my406 r-1qd0xha r-ad9z0x r-bcqeeo r-qvutc0
     //css-901oao r-hkyrab r-gwet1z r-a023e6 r-16dba41 r-ad9z0x r-bcqeeo r-bnwqim r-qvutc0
     //css-901oao.r-hkyrab.r-1qd0xha.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-bnwqim.r-qvutc0
-}
+    //css-901oao r-jwli3a r-gwet1z r-a023e6 r-16dba41 r-ad9z0x r-bcqeeo r-bnwqim r-qvutc0
+};
 doDecode();
 setInterval(() => {
     doDecode();
