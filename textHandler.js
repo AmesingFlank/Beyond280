@@ -1,26 +1,31 @@
 {
 const doDecode = ()=>{
     function tryDecodeAllTexts() {
-        let tweets = document.getElementsByClassName("css-1dbjc4n r-1loqt21 r-1udh08x r-o7ynqc r-1j63xyz");
-        //console.log(tweets);
+        let tweets = document.getElementsByClassName("css-901oao css-16my406 r-1qd0xha r-ad9z0x r-bcqeeo r-qvutc0");
         let strings = [];
         for (let i = tweets.length - 1; i >= 0; i--) {
-            let textbox = tweets[i].querySelector(".css-901oao.r-hkyrab.r-a023e6.r-16dba41.r-ad9z0x.r-bcqeeo.r-bnwqim.r-qvutc0");
-            //console.log(textbox)
-            let text = textbox.querySelector(".css-901oao.css-16my406.r-1qd0xha.r-ad9z0x.r-bcqeeo.r-qvutc0");
-            //console.log(text)
-            decodeAndReplace(text)
+            let textbox = tweets[i]
+            decodeAndReplace(textbox)
         }
 
     }
 
     tryDecodeAllTexts()
 
+    function isValid(string) {
+        for(let char of string) {
+            if("qwertyuiopasdfghjklzxcvbnm1234567890., #!?/".indexOf(char) == -1) {
+                return false
+            }
+        }
+        return true
+    }
+
     function decodeAndReplace(element) {
         let decodeResult;
         try {
             decodeResult = decode(element.textContent)
-            if (decodeResult["success"]) {
+            if (decodeResult["success"] && isValid(decodeResult["text"])) {
                 element.textContent = decodeResult["text"]
             }
         }
